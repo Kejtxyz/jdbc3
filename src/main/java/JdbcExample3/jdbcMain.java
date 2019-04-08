@@ -11,6 +11,7 @@ public class jdbcMain {
     public static final String URL = "jdbc:mysql://localhost:3306/tarr4_db?serverTimezone=UTC";
     public static final String USER = "klient";
     public static final String PASSWORD = "123";
+    public static final String SQL1 = "update zawodnicy set waga=? where imie=? and nazwisko=?";
 
     public static void main(String[] args) {
         try {
@@ -26,6 +27,16 @@ public class jdbcMain {
             int[] executeBatch = preapredStatement.executeBatch();
 
             for (int i:executeBatch){
+                System.out.println(i);
+            }
+            preapredStatement = connection.prepareStatement(SQL1);
+            preapredStatement.setInt(1,100);
+            preapredStatement.setString(2,"Marcin");
+            preapredStatement.setString(3,"BACHLEDA");
+            preapredStatement.addBatch();
+            int[] executeBatch2 = preapredStatement.executeBatch();
+            System.out.println("waga");
+            for(int i:executeBatch2){
                 System.out.println(i);
             }
             connection.close();
